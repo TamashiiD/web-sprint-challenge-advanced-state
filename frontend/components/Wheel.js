@@ -5,38 +5,38 @@ import { moveClockwise, moveCounterClockwise } from '../state/action-creators'
 
 // export default 
 function Wheel(props) {
-const { moveClockwise, moveCounterClockwise} = props
-const [initialWheelState, setWheelState] = useState(0)
-const [forward, setForward ] = useState(true)
+const { wheelState, moveClockwise, moveCounterClockwise} = props
+// const [initialWheelState, setWheelState] = useState(0)
+// const [forward, setForward ] = useState(true)
 
 const handleclockwise = () =>{
   moveClockwise();
-    setWheelState(initialWheelState+1)
-    if (initialWheelState === 5){
-      setWheelState(0)
-    }
+//     setWheelState(initialWheelState+1)
+//     if (initialWheelState === 5){
+//       setWheelState(0)
+//     }
   }
    
 
 const handlecounterclock =()=>{
   moveCounterClockwise()
-  setWheelState(initialWheelState-1)
-  if (initialWheelState === 0){
-    setWheelState(5) 
-  }
+//   setWheelState(initialWheelState-1)
+//   if (initialWheelState === 0){
+//     setWheelState(5) 
+//   }
 }
-
+console.log(wheelState)
   return (
     <div id="wrapper">
       <div id="wheel">
     
 
-     {initialWheelState === 0 ? <div className="cog active" style={{ "--i": 0 }}>B</div>: <div className="cog" style={{ "--i": 0 }}></div>} 
-     {initialWheelState === 1 ? <div className="cog active" style={{ "--i": 1 }}>B</div> : <div className="cog" style={{ "--i": 1 }}></div>}
-     {initialWheelState === 2 ? <div className="cog active" style={{ "--i": 2 }}>B</div> : <div className="cog" style={{ "--i": 2 }}></div>}
-     {initialWheelState === 3 ? <div className="cog active" style={{ "--i": 3 }}>B</div> : <div className="cog" style={{ "--i": 3 }}></div>}
-     {initialWheelState === 4 ? <div className="cog active" style={{ "--i": 4 }}>B</div> : <div className="cog" style={{ "--i": 4 }}></div>}
-     {initialWheelState === 5 ? <div className="cog active" style={{ "--i": 5 }}>B</div> : <div className="cog" style={{ "--i": 5 }}></div>}
+     {wheelState === 0 ? <div className="cog active" style={{ "--i": 0 }}>B</div>: <div className="cog" style={{ "--i": 0 }}></div>} 
+     {wheelState === 1 ? <div className="cog active" style={{ "--i": 1 }}>B</div> : <div className="cog" style={{ "--i": 1 }}></div>}
+     {wheelState === 2 ? <div className="cog active" style={{ "--i": 2 }}>B</div> : <div className="cog" style={{ "--i": 2 }}></div>}
+     {wheelState === 3 ? <div className="cog active" style={{ "--i": 3 }}>B</div> : <div className="cog" style={{ "--i": 3 }}></div>}
+     {wheelState === 4 ? <div className="cog active" style={{ "--i": 4 }}>B</div> : <div className="cog" style={{ "--i": 4 }}></div>}
+     {wheelState === 5 ? <div className="cog active" style={{ "--i": 5 }}>B</div> : <div className="cog" style={{ "--i": 5 }}></div>}
   
   {/* <div className="cog active" style={{ "--i": 0 }}>B</div>
         <div className="cog" style={{ "--i": 1 }}></div>
@@ -54,7 +54,9 @@ const handlecounterclock =()=>{
 }
 
 
-const mapStateToProps=(wheelState)=>{
- return( {initialWheelState : wheelState.initialWheelState})
+const mapStateToProps=(state)=>{
+ return{
+  wheelState : state.wheel.initialWheelState
+}
 }
 export default connect(mapStateToProps, {moveClockwise, moveCounterClockwise})(Wheel)

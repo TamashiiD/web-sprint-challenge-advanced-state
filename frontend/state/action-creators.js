@@ -32,7 +32,15 @@ export function setQuiz() { }
 
 export function inputChange() { }
 
-export function resetForm() { }
+
+
+
+export function resetForm() {
+  return ({type:RESET_FORM})
+ }
+
+
+
 
 // ❗ Async action creators
 export function fetchQuiz() {
