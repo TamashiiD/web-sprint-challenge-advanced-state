@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setQuiz, selectAnswer } from '../state/action-creators'
+import { setQuiz, selectAnswer, setMessage } from '../state/action-creators'
 
 function Quiz(props) {
 
-  const { initialSelectedAnswerStatea,initialSelectedAnswerStateb , initialQuizState, setQuiz, selectAnswer } = props
+  const { setMessage, initialSelectedAnswerStatea,initialSelectedAnswerStateb , initialQuizState, setQuiz, selectAnswer } = props
 
 const handleclick =(e)=>{
   selectAnswer(e.target.id)
@@ -12,6 +12,7 @@ const handleclick =(e)=>{
 
 const handlesubmit = ()=>{
   setQuiz()
+  
 }
 
   return (
@@ -49,8 +50,9 @@ const mapStateToProps = (state) => {
   return { 
     initialQuizState: state.quiz.initialQuizState,
     initialSelectedAnswerStatea: state.selectedAnswer.initialSelectedAnswerStatea,
-    initialSelectedAnswerStateb: state.selectedAnswer.initialSelectedAnswerStateb
+    initialSelectedAnswerStateb: state.selectedAnswer.initialSelectedAnswerStateb,
+    
    }
 }
 
-export default connect(mapStateToProps, { setQuiz, selectAnswer })(Quiz)
+export default connect(mapStateToProps, {setMessage, setQuiz, selectAnswer })(Quiz)

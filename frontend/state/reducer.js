@@ -1,6 +1,6 @@
 // ❗ You don't need to add extra reducers to achieve MVP
 import { combineReducers } from 'redux'
-import { SET_SELECTED_ANSWER, SET_QUIZ_INTO_STATE, INPUT_CHANGE, MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, RESET_FORM } from './action-creators'
+import {BUTTON_OFF, SET_SELECTED_ANSWER, SET_QUIZ_INTO_STATE, INPUT_CHANGE, MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, RESET_FORM, SET_INFO_MESSAGE, BUTTON_ON } from './action-creators'
 
 
 
@@ -28,11 +28,11 @@ function wheel(state = wheelState, action) {
   }
 }
 
-const quizState = {initialQuizState: true}
- function quiz(state = quizState, action) {
+const quizState = { initialQuizState: true }
+function quiz(state = quizState, action) {
   switch (action.type) {
     case SET_QUIZ_INTO_STATE:
-    return ({initialQuizState: false})
+      return ({ initialQuizState: false })
 
     default:
       return state
@@ -40,39 +40,50 @@ const quizState = {initialQuizState: true}
 
 }
 
-const answer = {initialSelectedAnswerStatea: "Selected",
-  initialSelectedAnswerStateb: "Select"}
-  function selectedAnswer(state = answer, action) {
+const answer = {
+  initialSelectedAnswerStatea: "Selected",
+  initialSelectedAnswerStateb: "Select"
+}
+function selectedAnswer(state = answer, action) {
   switch (action.type) {
     case SET_SELECTED_ANSWER:
-    if (action.payload === "answera"){
-      return {initialSelectedAnswerStatea: "Selected", initialSelectedAnswerStateb: "Select"}
-    }
-    if (action.payload ==="answerb"){
-      return {initialSelectedAnswerStatea: "Select", initialSelectedAnswerStateb: "Selected"}
-    }
-    
+      if (action.payload === "answera") {
+        return { initialSelectedAnswerStatea: "Selected", initialSelectedAnswerStateb: "Select" }
+      }
+      if (action.payload === "answerb") {
+        return { initialSelectedAnswerStatea: "Select", initialSelectedAnswerStateb: "Selected" }
+      }
+
     default:
-  return state
+      return state
   }
 }
 
-const initialMessageState = {message : ''}
- function infoMessage(state = initialMessageState, action) {
+const initialMessageState = ""
+function infoMessage(state = initialMessageState, action) {
+  switch (action.type) {
+    case SET_INFO_MESSAGE:
+      return (action.payload)
 
-  return state
+    default:
+      return state
+  }
+
 }
 
 const initialFormState = {
   newQuestion: '',
   newTrueAnswer: '',
   newFalseAnswer: '',
-  
+  clickButton: true
+
 }
 function form(state = initialFormState, action) {
   switch (action.type) {
 
     case INPUT_CHANGE:
+      console.log(state.clickButton)
+
       if (action.payload2 === "newQuestion") {
         return ({ ...state, newQuestion: action.payload });
       }
@@ -82,9 +93,14 @@ function form(state = initialFormState, action) {
       if (action.payload2 === "newFalseAnswer") {
         return ({ ...state, newFalseAnswer: action.payload });
       }
+    case BUTTON_ON:
+        return ({...state, clickButton: false})
+       case BUTTON_OFF:
+        return ({...state, clickButton: true})
+     
+
     case RESET_FORM:
       return initialFormState
-
     default:
       return state
   }

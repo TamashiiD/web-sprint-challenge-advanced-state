@@ -11,53 +11,66 @@ export const SET_SELECTED_ANSWER = 'SET_SELECTED_ANSWER'
 export const SET_INFO_MESSAGE = 'SET_INFO_MESSAGE'
 export const INPUT_CHANGE = 'INPUT_CHANGE'
 export const RESET_FORM = 'RESET_FORM'
+export const BUTTON_ON = "BUTTON_ON"
+export const BUTTON_OFF = "BUTTON_OFF"
 
 
 export function moveClockwise() {
-  return({type:MOVE_CLOCKWISE })
- }
+  return ({ type: MOVE_CLOCKWISE })
+}
 
 export function moveCounterClockwise() {
-  return({type:MOVE_COUNTERCLOCKWISE })
- }
-
-
-export function selectAnswer(id) { 
-  return({type: SET_SELECTED_ANSWER, payload: id})
+  return ({ type: MOVE_COUNTERCLOCKWISE })
 }
 
-export function setMessage() { }
 
-export function setQuiz() { 
-  return ({type: SET_QUIZ_INTO_STATE})
+export function selectAnswer(id) {
+  return ({ type: SET_SELECTED_ANSWER, payload: id })
+}
+
+export function setMessage(message) {
+  return ({ type: SET_INFO_MESSAGE, payload: message })
+}
+
+export function setQuiz() {
+  return ({ type: SET_QUIZ_INTO_STATE })
 
 }
 
-export function inputChange(input, id) {
-  return({type:INPUT_CHANGE , payload: input, payload2: id})
- }
+export function inputChange(input, id, newTrueAnswer, newQuestion, newFalseAnswer) {
+  return ({ type: INPUT_CHANGE, payload: input, payload2: id, payload3:newTrueAnswer, payload4:newQuestion, payload5:newFalseAnswer })
+}
 
 
-export function resetForm(newQuestion, newTrueAnswer, newFalseAnswer) {
+export const resetForm = (newQuestion, newTrueAnswer, newFalseAnswer) => dispatch => {
 
-  const data = { "question_text": newQuestion, "true_answer_text": newTrueAnswer, "false_answer_text": newFalseAnswer}
-  console.log(data)
-    axios.post("http://localhost:9000/api/quiz/new", data)
-    .then((res)=> console.log(res) )
-    .catch(err=> console.log(err.response.data.message))
-    return ({type:RESET_FORM})
- }
+  axios.post("http://localhost:9000/api/quiz/new", { "question_text": newQuestion, "true_answer_text": newTrueAnswer, "false_answer_text": newFalseAnswer })
+  .then((res) => dispatch(setMessage(`Congrats: "${res.data.question}" is a great question!`)))
+  .catch(err => console.log(err))
+  dispatch(reset())
 
- 
+}
 
+const reset = () => {
+  return({ type: RESET_FORM })
+}
+
+export const buttonOn = () => {
+  return({type: BUTTON_ON})
+}
+
+export const buttonOff = () => {
+  return({type: BUTTON_OFF})
+}
 // ❗ Async action creators
-export function fetchQuiz() {
-  return function (dispatch) {
+export const fetchQuiz = () => dispatch => {
+  
     // First, dispatch an action to reset the quiz state (so the "Loading next quiz..." message can display)
     // On successful GET:
     // - Dispatch an action to send the obtained quiz to its state
-  }
+  
 }
+
 export function postAnswer() {
   return function (dispatch) {
     // On successful POST:
