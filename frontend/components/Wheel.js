@@ -25,7 +25,7 @@ const handlecounterclock =()=>{
 //     setWheelState(5) 
 //   }
 }
-console.log(wheelState)
+
   return (
     <div id="wrapper">
       <div id="wheel">

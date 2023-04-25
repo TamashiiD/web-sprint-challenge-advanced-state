@@ -1,4 +1,8 @@
 // ❗ You don't need to add extra action creators to achieve MVP
+
+import axios from "axios"
+import { connect } from "react-redux"
+
 // ❗ You don't need to add extra action types to achieve MVP
 export const MOVE_CLOCKWISE = 'MOVE_CLOCKWISE'
 export const MOVE_COUNTERCLOCKWISE = 'MOVE_COUNTERCLOCKWISE'
@@ -7,12 +11,6 @@ export const SET_SELECTED_ANSWER = 'SET_SELECTED_ANSWER'
 export const SET_INFO_MESSAGE = 'SET_INFO_MESSAGE'
 export const INPUT_CHANGE = 'INPUT_CHANGE'
 export const RESET_FORM = 'RESET_FORM'
-
-
-
-
-
-
 
 
 export function moveClockwise() {
@@ -24,23 +22,33 @@ export function moveCounterClockwise() {
  }
 
 
-export function selectAnswer() { }
+export function selectAnswer(id) { 
+  return({type: SET_SELECTED_ANSWER, payload: id})
+}
 
 export function setMessage() { }
 
-export function setQuiz() { }
+export function setQuiz() { 
+  return ({type: SET_QUIZ_INTO_STATE})
 
-export function inputChange() { }
+}
 
-
-
-
-export function resetForm() {
-  return ({type:RESET_FORM})
+export function inputChange(input, id) {
+  return({type:INPUT_CHANGE , payload: input, payload2: id})
  }
 
 
+export function resetForm(newQuestion, newTrueAnswer, newFalseAnswer) {
 
+  const data = { "question_text": newQuestion, "true_answer_text": newTrueAnswer, "false_answer_text": newFalseAnswer}
+  console.log(data)
+    axios.post("http://localhost:9000/api/quiz/new", data)
+    .then((res)=> console.log(res) )
+    .catch(err=> console.log(err.response.data.message))
+    return ({type:RESET_FORM})
+ }
+
+ 
 
 // ❗ Async action creators
 export function fetchQuiz() {
@@ -66,3 +74,8 @@ export function postQuiz() {
   }
 }
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state
+
+
+
+
+
