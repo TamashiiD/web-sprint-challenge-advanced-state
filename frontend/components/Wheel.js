@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { moveClockwise, moveCounterClockwise } from '../state/action-creators'
+import { turnoffthemessage2, moveClockwise, moveCounterClockwise } from '../state/action-creators'
 
 
 // export default 
 function Wheel(props) {
-const { wheelState, moveClockwise, moveCounterClockwise} = props
+const { turnoffthemessage2, wheelState, moveClockwise, moveCounterClockwise} = props
+
+useEffect(()=>{
+  turnoffthemessage2()
+  },[])
+
+
 
 const handleclockwise = () =>{
   moveClockwise();
@@ -49,4 +55,4 @@ const mapStateToProps=(state)=>{
   wheelState : state.wheel.initialWheelState
 }
 }
-export default connect(mapStateToProps, {moveClockwise, moveCounterClockwise})(Wheel)
+export default connect(mapStateToProps, {turnoffthemessage2, moveClockwise, moveCounterClockwise})(Wheel)

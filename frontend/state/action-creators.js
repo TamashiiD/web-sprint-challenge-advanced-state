@@ -19,6 +19,7 @@ export const SET_ANSWER_STATE = "SET_ANSWER_STATE"
 export const SUBMIT = "SUBMIT"
 export const TEST_PASSED = "TEST_PASSED"
 export const TURN_OFF="TURN_OFF"
+export const TURN_OFF2 = "TURN_OFF2"
 
 
 export function moveClockwise() {
@@ -89,10 +90,18 @@ return({type: UPDATE_QUIZ, payload: answer1, payload2: answer2, payload3: questi
 
 
 
-export function postanAnswer(quizid, answerid) { 
-    axios.post( "http://localhost:9000/api/quiz/answer", {"quiz_id": quizid , "answer_id": answerid })
-    .then(res=> addtodata(res.data.message))
+export const  postanAnswer = (initialSelectedAnswerStatea,initialSelectedAnswerStateb, quizid, answerid, answerid2) => dispatch => { 
+ if (initialSelectedAnswerStatea === "SELECTED"){
+  axios.post( "http://localhost:9000/api/quiz/answer", {"quiz_id": quizid , "answer_id": answerid })
+    .then(res=> dispatch(addtodata(res.data.message)))
     .catch(err=> console.log(err))
+ }
+ if(initialSelectedAnswerStateb === "SELECTED"){
+  axios.post( "http://localhost:9000/api/quiz/answer", {"quiz_id": quizid , "answer_id": answerid2 })
+    .then(res=> dispatch(addtodata(res.data.message)))
+    .catch(err=> console.log(err))
+ }
+    
    
     // On successful POST:
     // - Dispatch an action to reset the selected answer state
@@ -121,4 +130,8 @@ export const sumbitButton = () => {
 
 export const turnoffthemessage = () => {
 return ({type: TURN_OFF})
+}
+
+export const turnoffthemessage2=()=>{
+  return ({type: TURN_OFF2})
 }

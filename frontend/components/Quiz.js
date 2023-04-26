@@ -29,7 +29,7 @@ const handleclick =(e)=>{
 const handlesubmit = (e)=>{
   e.preventDefault()
   fetchQuiz() 
-  postanAnswer(quizid, answer1id)
+  postanAnswer(initialSelectedAnswerStatea, initialSelectedAnswerStateb, quizid, answer1id, answer2id)
   setQuiz()
  
 }

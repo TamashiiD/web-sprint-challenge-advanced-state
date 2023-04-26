@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import * as actionCreators from '../state/action-creators'
-import { buttonOff, inputChange, resetForm, buttonOn} from '../state/action-creators'
+import { turnoffthemessage2, buttonOff, inputChange, resetForm, buttonOn} from '../state/action-creators'
 import axios from 'axios'
 
 function Form(props) {
-  const {buttonOff, buttonOn, clickButton, newQuestion, newTrueAnswer, newFalseAnswer, inputChange, resetForm} = props
+  const {showmessage, turnoffthemessage2, buttonOff, buttonOn, clickButton, newQuestion, newTrueAnswer, newFalseAnswer, inputChange, resetForm} = props
+
+
+
+useEffect(()=>{
+  turnoffthemessage2()
+  },[])
+
+
 
 
   const handlenewquestion = (e) => {
@@ -28,7 +36,6 @@ function Form(props) {
   }
   
 
-
   return (
     <form id="form" onSubmit={handleonSubmit}>
       <h2>Create New Quiz</h2>
@@ -46,8 +53,9 @@ return {
   newQuestion: state.form.newQuestion,
   newTrueAnswer: state.form.newTrueAnswer,
   newFalseAnswer: state.form.newFalseAnswer,
-  clickButton: state.form.clickButton
+  clickButton: state.form.clickButton,
+  showmessage: state.correctAnswer.showmessage
 
 }
 }
-export default connect(mapStateToProps, {inputChange, resetForm, buttonOn, buttonOff})(Form)
+export default connect(mapStateToProps, {turnoffthemessage2, inputChange, resetForm, buttonOn, buttonOff})(Form)
