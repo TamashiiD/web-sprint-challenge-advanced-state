@@ -45,14 +45,14 @@ quizstate(initialQuizState)
             {question.length >=1 ? <h2>{question}</h2>:<h2>What is a closure?</h2>}
         
             <div id="quizAnswers">
-              <div className="answer selected">
+              <div className={initialSelectedAnswerStatea === "SELECTED" ? "answer selected" : "answer"}> 
                  {answer1.length >=1 ? <h3>{answer1}</h3> : <h3>A function</h3>}
                 <button onClick={handleclick} id="answera">
                   {initialSelectedAnswerStatea}
                 </button>
               </div>
 
-              <div className="answer">
+              <div className={initialSelectedAnswerStateb === "SELECTED" ? "answer selected" : "answer"}>
               {answer2.length >=1 ? <h3>{answer2}</h3> : <h3>An elephant</h3>}
                 <button onClick={handleclick} id="answerb">
                   {initialSelectedAnswerStateb}
