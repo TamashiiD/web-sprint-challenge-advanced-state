@@ -140,14 +140,14 @@ function updateQuiz(state = initialupdatestate, action) {
 
 const correctAnswerState = {
   testresponse: "",
-  showmessage: false
+  // showmessage: false
 }
 function correctAnswer(state = correctAnswerState, action) {
   switch (action.type) {
     case TEST_PASSED:
-      return ({ showmessage: true, testresponse: action.payload })
+      return ({testresponse: action.payload })
     case TURN_OFF2:
-      return ({ ...state, showmessage: false })
+      return ({ ...state })
 
     default:
       return state
