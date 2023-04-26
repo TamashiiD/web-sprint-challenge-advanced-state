@@ -10,11 +10,11 @@ function Form(props) {
 
   const handlenewquestion = (e) => {
     e.preventDefault()
-    inputChange(e.target.value, e.target.id, )
+    inputChange(e.target.value, e.target.id )
     if (newQuestion && newTrueAnswer && newFalseAnswer){
       buttonOn()
     }
-    else{
+    if (newQuestion === "" || newTrueAnswer === "" || newFalseAnswer ===""){
       buttonOff()
 
     }

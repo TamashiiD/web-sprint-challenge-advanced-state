@@ -1,6 +1,6 @@
 // ❗ You don't need to add extra reducers to achieve MVP
 import { combineReducers } from 'redux'
-import {BUTTON_OFF, SET_SELECTED_ANSWER, SET_QUIZ_INTO_STATE, INPUT_CHANGE, MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, RESET_FORM, SET_INFO_MESSAGE, BUTTON_ON } from './action-creators'
+import { UPDATE_QUIZ, BUTTON_OFF, SET_SELECTED_ANSWER, SET_QUIZ_INTO_STATE, INPUT_CHANGE, MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, RESET_FORM, SET_INFO_MESSAGE, BUTTON_ON, SET_ANSWER_STATE, SUBMIT } from './action-creators'
 
 
 
@@ -32,7 +32,7 @@ const quizState = { initialQuizState: true }
 function quiz(state = quizState, action) {
   switch (action.type) {
     case SET_QUIZ_INTO_STATE:
-      return ({ initialQuizState: false })
+      return ({ initialQuizState: true })
 
     default:
       return state
@@ -41,8 +41,9 @@ function quiz(state = quizState, action) {
 }
 
 const answer = {
-  initialSelectedAnswerStatea: "Selected",
-  initialSelectedAnswerStateb: "Select"
+  initialSelectedAnswerStatea: "Select",
+  initialSelectedAnswerStateb: "Select",
+  submitbuttonon: true
 }
 function selectedAnswer(state = answer, action) {
   switch (action.type) {
@@ -53,7 +54,10 @@ function selectedAnswer(state = answer, action) {
       if (action.payload === "answerb") {
         return { initialSelectedAnswerStatea: "Select", initialSelectedAnswerStateb: "Selected" }
       }
-
+    case SUBMIT:
+      if (initialSelectedAnswerStatea === "Selected" || initialSelectedAnswerStateb === "Selected"){
+        return ({...state, submitbuttonon: false})
+      }
     default:
       return state
   }
@@ -82,7 +86,6 @@ function form(state = initialFormState, action) {
   switch (action.type) {
 
     case INPUT_CHANGE:
-      console.log(state.clickButton)
 
       if (action.payload2 === "newQuestion") {
         return ({ ...state, newQuestion: action.payload });
@@ -94,10 +97,10 @@ function form(state = initialFormState, action) {
         return ({ ...state, newFalseAnswer: action.payload });
       }
     case BUTTON_ON:
-        return ({...state, clickButton: false})
-       case BUTTON_OFF:
-        return ({...state, clickButton: true})
-     
+      return ({ ...state, clickButton: false })
+    case BUTTON_OFF:
+      return ({ ...state, clickButton: true })
+
 
     case RESET_FORM:
       return initialFormState
@@ -106,5 +109,44 @@ function form(state = initialFormState, action) {
   }
 
 }
+const initialupdatestate = {
+  answer1: "",
+  answer2: "",
+  question: "",
+  answer1id: "0VEv0",
+  answer2id: "",
+  quizid: "LVqUh"
+}
+function updateQuiz(state = initialupdatestate, action) {
+  switch (action.type) {
+    case UPDATE_QUIZ:
+      return ({ ...state, answer1: action.payload, answer2: action.payload2, question: action.payload3, answer1id: action.payload4, answer2id: action.payload5, quizid: action.payload6 })
+    default:
+      return state
+  }
+}
 
-export default combineReducers({ wheel, quiz, selectedAnswer, infoMessage, form })
+
+const correctAnswerState ={
+  correct: "",
+incorrect: "",
+}
+function correctAnswer(state = correctAnswerState, action) {
+  switch (action.type) {
+    case SET_ANSWER_STATE:
+      if(action.payload === correct){
+        return ({...state, correct: action.payload})
+      }
+      if(action.payload === incorrect){
+        return ({...state, incorrect: action.payload})
+      }
+      
+
+    default:
+      return state
+  }
+
+}
+
+
+export default combineReducers({ correctAnswer, updateQuiz, wheel, quiz, selectedAnswer, infoMessage, form })

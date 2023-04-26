@@ -1,6 +1,7 @@
 // ❗ You don't need to add extra action creators to achieve MVP
 
 import axios from "axios"
+import { useEffect } from "react"
 import { connect } from "react-redux"
 
 // ❗ You don't need to add extra action types to achieve MVP
@@ -13,6 +14,9 @@ export const INPUT_CHANGE = 'INPUT_CHANGE'
 export const RESET_FORM = 'RESET_FORM'
 export const BUTTON_ON = "BUTTON_ON"
 export const BUTTON_OFF = "BUTTON_OFF"
+export const UPDATE_QUIZ = "UPDATE_QUIZ"
+export const SET_ANSWER_STATE = "SET_ANSWER_STATE"
+export const SUBMIT = "SUBMIT"
 
 
 export function moveClockwise() {
@@ -24,8 +28,12 @@ export function moveCounterClockwise() {
 }
 
 
-export function selectAnswer(id) {
+export function selectAnswer(id)  {
+  return function (dispatch){
+    dispatch(sumbitButton())
   return ({ type: SET_SELECTED_ANSWER, payload: id })
+  }
+  
 }
 
 export function setMessage(message) {
@@ -64,15 +72,29 @@ export const buttonOff = () => {
 }
 // ❗ Async action creators
 export const fetchQuiz = () => dispatch => {
-  
+  dispatch(setQuiz())
+ axios.get("http://localhost:9000/api/quiz/next")
+ .then(res => { dispatch(updateQuiz(res.data.answers[0].text, res.data.answers[1].text, res.data.question, res.data.answers[0].answer_id, res.data.answers[1].answer_id, res.data.quiz_id))})
+ .catch(err=> console.log(err))
     // First, dispatch an action to reset the quiz state (so the "Loading next quiz..." message can display)
     // On successful GET:
     // - Dispatch an action to send the obtained quiz to its state
   
 }
 
-export function postAnswer() {
-  return function (dispatch) {
+export const updateQuiz = (answer1, answer2, question, answer1id, answer2id, quizid)=>{
+return({type: UPDATE_QUIZ, payload: answer1, payload2: answer2, payload3: question, payload4:answer1id, payload5:answer2id, payload6: quizid})
+
+}
+
+
+
+export function postanAnswer(quizid, answerid) {
+  return function (dispatch) { 
+    axios.post( "http://localhost:9000/api/quiz/answer", {"quiz_id": quizid , "answer_id": answerid })
+    .then(dispatch(setQuiz()))
+    .catch(err=> console.log(err))
+   
     // On successful POST:
     // - Dispatch an action to reset the selected answer state
     // - Dispatch an action to set the server message to state
@@ -89,6 +111,8 @@ export function postQuiz() {
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state
 
 
-
+const sumbitButton = () => {
+  return ({ type: SUBMIT})
+}
 
 

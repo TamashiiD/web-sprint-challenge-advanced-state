@@ -6,24 +6,14 @@ import { moveClockwise, moveCounterClockwise } from '../state/action-creators'
 // export default 
 function Wheel(props) {
 const { wheelState, moveClockwise, moveCounterClockwise} = props
-// const [initialWheelState, setWheelState] = useState(0)
-// const [forward, setForward ] = useState(true)
 
 const handleclockwise = () =>{
   moveClockwise();
-//     setWheelState(initialWheelState+1)
-//     if (initialWheelState === 5){
-//       setWheelState(0)
-//     }
   }
    
 
 const handlecounterclock =()=>{
   moveCounterClockwise()
-//   setWheelState(initialWheelState-1)
-//   if (initialWheelState === 0){
-//     setWheelState(5) 
-//   }
 }
 
   return (
