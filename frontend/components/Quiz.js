@@ -46,14 +46,14 @@ quizstate(initialQuizState)
         
             <div id="quizAnswers">
               <div className={initialSelectedAnswerStatea === "SELECTED" ? "answer selected" : "answer"}> 
-                 {answer1.length >=1 ? <h3>{answer1}</h3> : <h3>A function</h3>}
+                 {answer1.length >=1 ? `${answer1}` : "A function"}
                 <button onClick={handleclick} id="answera">
                   {initialSelectedAnswerStatea}
                 </button>
               </div>
 
               <div className={initialSelectedAnswerStateb === "SELECTED" ? "answer selected" : "answer"}>
-              {answer2.length >=1 ? <h3>{answer2}</h3> : <h3>An elephant</h3>}
+              {answer2.length >=1 ? `${answer2}`: "An elephant"}
                 <button onClick={handleclick} id="answerb">
                   {initialSelectedAnswerStateb}
                 </button>
