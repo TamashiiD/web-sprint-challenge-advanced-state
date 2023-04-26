@@ -17,6 +17,7 @@ export const BUTTON_OFF = "BUTTON_OFF"
 export const UPDATE_QUIZ = "UPDATE_QUIZ"
 export const SET_ANSWER_STATE = "SET_ANSWER_STATE"
 export const SUBMIT = "SUBMIT"
+export const TEST_PASSED = "TEST_PASSED"
 
 
 export function moveClockwise() {
@@ -29,10 +30,9 @@ export function moveCounterClockwise() {
 
 
 export function selectAnswer(id)  {
-  return function (dispatch){
-    dispatch(sumbitButton())
+ 
   return ({ type: SET_SELECTED_ANSWER, payload: id })
-  }
+  
   
 }
 
@@ -42,7 +42,6 @@ export function setMessage(message) {
 
 export function setQuiz() {
   return ({ type: SET_QUIZ_INTO_STATE })
-
 }
 
 export function inputChange(input, id, newTrueAnswer, newQuestion, newFalseAnswer) {
@@ -89,10 +88,9 @@ return({type: UPDATE_QUIZ, payload: answer1, payload2: answer2, payload3: questi
 
 
 
-export function postanAnswer(quizid, answerid) {
-  return function (dispatch) { 
+export function postanAnswer(quizid, answerid) { 
     axios.post( "http://localhost:9000/api/quiz/answer", {"quiz_id": quizid , "answer_id": answerid })
-    .then(dispatch(setQuiz()))
+    .then(res=> addtodata(res.data.message))
     .catch(err=> console.log(err))
    
     // On successful POST:
@@ -100,7 +98,11 @@ export function postanAnswer(quizid, answerid) {
     // - Dispatch an action to set the server message to state
     // - Dispatch the fetching of the next quiz
   }
+
+const addtodata = (res) => {
+return({type: TEST_PASSED, payload: res})
 }
+
 export function postQuiz() {
   return function (dispatch) {
     // On successful POST:
@@ -111,7 +113,7 @@ export function postQuiz() {
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state
 
 
-const sumbitButton = () => {
+export const sumbitButton = () => {
   return ({ type: SUBMIT})
 }
 

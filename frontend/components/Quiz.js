@@ -1,29 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { updateQuiz, fetchQuiz, setQuiz, selectAnswer, setMessage,  } from '../state/action-creators'
+import { postanAnswer, sumbitButton, updateQuiz, fetchQuiz, setQuiz, selectAnswer, setMessage,  } from '../state/action-creators'
 import axios from 'axios'
 
 function Quiz(props) {
 
-  const {submitbuttonon, updateQuiz, quizid, answer1id, answer2id, answer1, answer2, question,fetchQuiz, setMessage, initialSelectedAnswerStatea,initialSelectedAnswerStateb , initialQuizState, setQuiz, selectAnswer } = props
+  const { postanAnswer , sumbitButton, submitbuttonon, updateQuiz, quizid, answer1id, answer2id, answer1, answer2, question,fetchQuiz, setMessage, initialSelectedAnswerStatea,initialSelectedAnswerStateb , initialQuizState, setQuiz, selectAnswer } = props
 
-  useEffect(()=>{
- axios.get("http://localhost:9000/api/quiz/next")
-    .then(res => updateQuiz(res.data.answers[0].text, res.data.answers[1].text, res.data.question, res.data.answers[0].answer_id, res.data.answers[1].answer_id, res.data.quiz_id))
-    .catch(err=> console.log(err))}
-  ,[])
-   
+ 
+   const quizstate = (initialQuizState) => {
+    if(initialQuizState === false){
+      useEffect(()=>{
+        axios.get("http://localhost:9000/api/quiz/next")
+           .then(res => updateQuiz(res.data.answers[0].text, res.data.answers[1].text, res.data.question, res.data.answers[0].answer_id, res.data.answers[1].answer_id, res.data.quiz_id))
+           .catch(err=> console.log(err))}
+         ,[]);
+         setQuiz()
+    }
+   }
 
 const handleclick =(e)=>{
   selectAnswer(e.target.id)
+  sumbitButton()
 }
 
 const handlesubmit = (e)=>{
   e.preventDefault()
-  fetchQuiz()
+  fetchQuiz() 
+  postanAnswer(quizid, answer1id)
   setQuiz()
+ 
 }
 
+quizstate(initialQuizState)
 
   return (
     <div id="wrapper">
@@ -72,4 +81,4 @@ const mapStateToProps = (state) => {
    }
 }
 
-export default connect(mapStateToProps, {updateQuiz, setMessage, setQuiz, selectAnswer, fetchQuiz })(Quiz)
+export default connect(mapStateToProps, {postanAnswer, sumbitButton, updateQuiz, setMessage, setQuiz, selectAnswer, fetchQuiz })(Quiz)

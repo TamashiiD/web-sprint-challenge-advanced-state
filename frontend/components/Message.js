@@ -3,10 +3,13 @@ import { connect } from 'react-redux'
 
 function Message(props) {
 
-  return (
-    <div id="message2">{props.message2}</div>
-  )
-}
+
+
+  return ( <div>
+    {/* {props.correctAnswer.showmessage && <div id="message"> {props.correctAnswer.testresponse}</div>} */}
+{props.infoMessage.showmessage ? (<div id="message">{props.infoMessage.initialMessageState}</div>): ""}
+   </div>
+  )}
 
 
 
