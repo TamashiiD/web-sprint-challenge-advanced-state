@@ -18,6 +18,7 @@ export const UPDATE_QUIZ = "UPDATE_QUIZ"
 export const SET_ANSWER_STATE = "SET_ANSWER_STATE"
 export const SUBMIT = "SUBMIT"
 export const TEST_PASSED = "TEST_PASSED"
+export const TURN_OFF="TURN_OFF"
 
 
 export function moveClockwise() {
@@ -52,7 +53,7 @@ export function inputChange(input, id, newTrueAnswer, newQuestion, newFalseAnswe
 export const resetForm = (newQuestion, newTrueAnswer, newFalseAnswer) => dispatch => {
 
   axios.post("http://localhost:9000/api/quiz/new", { "question_text": newQuestion, "true_answer_text": newTrueAnswer, "false_answer_text": newFalseAnswer })
-  .then((res) => dispatch(setMessage(`Congrats: "${res.data.question}" is a great question!`)))
+  .then((res) => dispatch(setMessage(res.data.question)))
   .catch(err => console.log(err))
   dispatch(reset())
 
@@ -118,3 +119,6 @@ export const sumbitButton = () => {
 }
 
 
+export const turnoffthemessage = () => {
+return ({type: TURN_OFF})
+}

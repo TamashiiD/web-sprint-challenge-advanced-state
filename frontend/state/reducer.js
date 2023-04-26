@@ -1,6 +1,6 @@
 // ❗ You don't need to add extra reducers to achieve MVP
 import { combineReducers } from 'redux'
-import { UPDATE_QUIZ, BUTTON_OFF, SET_SELECTED_ANSWER, SET_QUIZ_INTO_STATE, INPUT_CHANGE, MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, RESET_FORM, SET_INFO_MESSAGE, BUTTON_ON, SET_ANSWER_STATE, SUBMIT, TEST_PASSED } from './action-creators'
+import { UPDATE_QUIZ, BUTTON_OFF, SET_SELECTED_ANSWER, SET_QUIZ_INTO_STATE, INPUT_CHANGE, MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, RESET_FORM, SET_INFO_MESSAGE, BUTTON_ON, SET_ANSWER_STATE, SUBMIT, TEST_PASSED, TURN_OFF } from './action-creators'
 
 
 
@@ -69,7 +69,8 @@ function infoMessage(state = initial, action) {
   switch (action.type) {
     case SET_INFO_MESSAGE:
       return ({showmessage: true, initialmessageState: action.payload})
-
+    case TURN_OFF:
+      return({...state, showmessage: false})
     default:
       return state
   }

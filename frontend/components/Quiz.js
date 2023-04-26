@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { postanAnswer, sumbitButton, updateQuiz, fetchQuiz, setQuiz, selectAnswer, setMessage,  } from '../state/action-creators'
+import { turnoffthemessage, postanAnswer, sumbitButton, updateQuiz, fetchQuiz, setQuiz, selectAnswer, setMessage,  } from '../state/action-creators'
 import axios from 'axios'
 
 function Quiz(props) {
 
-  const { postanAnswer , sumbitButton, submitbuttonon, updateQuiz, quizid, answer1id, answer2id, answer1, answer2, question,fetchQuiz, setMessage, initialSelectedAnswerStatea,initialSelectedAnswerStateb , initialQuizState, setQuiz, selectAnswer } = props
+  const { turnoffthemessage, postanAnswer , sumbitButton, submitbuttonon, updateQuiz, quizid, answer1id, answer2id, answer1, answer2, question,fetchQuiz, setMessage, initialSelectedAnswerStatea,initialSelectedAnswerStateb , initialQuizState, setQuiz, selectAnswer } = props
 
  
    const quizstate = (initialQuizState) => {
     if(initialQuizState === false){
       useEffect(()=>{
         axios.get("http://localhost:9000/api/quiz/next")
-           .then(res => updateQuiz(res.data.answers[0].text, res.data.answers[1].text, res.data.question, res.data.answers[0].answer_id, res.data.answers[1].answer_id, res.data.quiz_id))
+           .then(res => {updateQuiz(res.data.answers[0].text, res.data.answers[1].text, res.data.question, res.data.answers[0].answer_id, res.data.answers[1].answer_id, res.data.quiz_id);
+            setQuiz();
+            turnoffthemessage()})
            .catch(err=> console.log(err))}
          ,[]);
-         setQuiz()
+        
     }
    }
 
@@ -81,4 +83,4 @@ const mapStateToProps = (state) => {
    }
 }
 
-export default connect(mapStateToProps, {postanAnswer, sumbitButton, updateQuiz, setMessage, setQuiz, selectAnswer, fetchQuiz })(Quiz)
+export default connect(mapStateToProps, {turnoffthemessage, postanAnswer, sumbitButton, updateQuiz, setMessage, setQuiz, selectAnswer, fetchQuiz })(Quiz)
