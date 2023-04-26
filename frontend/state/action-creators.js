@@ -12,15 +12,13 @@ export const SET_SELECTED_ANSWER = 'SET_SELECTED_ANSWER'
 export const SET_INFO_MESSAGE = 'SET_INFO_MESSAGE'
 export const INPUT_CHANGE = 'INPUT_CHANGE'
 export const RESET_FORM = 'RESET_FORM'
-export const BUTTON_ON = "BUTTON_ON"
-export const BUTTON_OFF = "BUTTON_OFF"
 export const UPDATE_QUIZ = "UPDATE_QUIZ"
 export const SET_ANSWER_STATE = "SET_ANSWER_STATE"
 export const SUBMIT = "SUBMIT"
 export const TEST_PASSED = "TEST_PASSED"
 export const TURN_OFF="TURN_OFF"
 export const TURN_OFF2 = "TURN_OFF2"
-
+export const SUMBIT_ON ="SUMBIT_ON"
 
 export function moveClockwise() {
   return ({ type: MOVE_CLOCKWISE })
@@ -54,7 +52,7 @@ export function inputChange(input, id, newTrueAnswer, newQuestion, newFalseAnswe
 export const resetForm = (newQuestion, newTrueAnswer, newFalseAnswer) => dispatch => {
 
   axios.post("http://localhost:9000/api/quiz/new", { "question_text": newQuestion, "true_answer_text": newTrueAnswer, "false_answer_text": newFalseAnswer })
-  .then((res) => dispatch(setMessage(res.data.question)))
+  .then((res) =>{console.log(res); dispatch(setMessage(res.data.question))})
   .catch(err => console.log(err))
   dispatch(reset())
 
@@ -64,9 +62,7 @@ const reset = () => {
   return({ type: RESET_FORM })
 }
 
-export const buttonOn = () => {
-  return({type: BUTTON_ON})
-}
+
 
 export const buttonOff = () => {
   return({type: BUTTON_OFF})
@@ -114,11 +110,7 @@ return({type: TEST_PASSED, payload: res})
 }
 
 export function postQuiz() {
-  return function (dispatch) {
-    // On successful POST:
-    // - Dispatch the correct message to the the appropriate state
-    // - Dispatch the resetting of the form
-  }
+ 
 }
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state
 
@@ -134,4 +126,8 @@ return ({type: TURN_OFF})
 
 export const turnoffthemessage2=()=>{
   return ({type: TURN_OFF2})
+}
+
+export function submitOn(){
+  return ({type: SUMBIT_ON})
 }

@@ -1,6 +1,6 @@
 // ❗ You don't need to add extra reducers to achieve MVP
 import { combineReducers } from 'redux'
-import { TURN_OFF2, UPDATE_QUIZ, BUTTON_OFF, SET_SELECTED_ANSWER, SET_QUIZ_INTO_STATE, INPUT_CHANGE, MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, RESET_FORM, SET_INFO_MESSAGE, BUTTON_ON, SET_ANSWER_STATE, SUBMIT, TEST_PASSED, TURN_OFF } from './action-creators'
+import { SUMBIT_ON, TURN_OFF2, UPDATE_QUIZ, SET_SELECTED_ANSWER, SET_QUIZ_INTO_STATE, INPUT_CHANGE, MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, RESET_FORM, SET_INFO_MESSAGE, SET_ANSWER_STATE, SUBMIT, TEST_PASSED, TURN_OFF } from './action-creators'
 
 
 
@@ -84,7 +84,7 @@ const initialFormState = {
   newQuestion: '',
   newTrueAnswer: '',
   newFalseAnswer: '',
-  clickButton: true
+  
 
 }
 function form(state = initialFormState, action) {
@@ -101,10 +101,16 @@ function form(state = initialFormState, action) {
       if (action.payload2 === "newFalseAnswer") {
         return ({ ...state, newFalseAnswer: action.payload });
       }
-    case BUTTON_ON:
-      return ({ ...state, clickButton: false })
-    case BUTTON_OFF:
-      return ({ ...state, clickButton: true })
+      // if (action.payload3.length >= 1 && action.payload4.length >=1 && action.payload5.length >=1){
+      //   return({...state, clickButton: false})
+      // }
+      
+    // case BUTTON_ON:
+    //   if (action.payload.length >= 1 && action.payload2.length >=1 && action.payload3.length >=1){
+    //   return ({ ...state, clickButton: false })
+    // }
+    // case BUTTON_OFF:
+    //   return ({ ...state, clickButton: true })
 
 
     case RESET_FORM:
@@ -148,6 +154,15 @@ function correctAnswer(state = correctAnswerState, action) {
   }
 
 }
+var clickButton = {button : true}
 
+function submitOn(state = clickButton, action){
+switch(action.type){
+  case SUMBIT_ON:
+return {button: false}
+  default:
+    return state
+}
+}
 
-export default combineReducers({ correctAnswer, updateQuiz, wheel, quiz, selectedAnswer, infoMessage, form })
+export default combineReducers({ submitOn, correctAnswer, updateQuiz, wheel, quiz, selectedAnswer, infoMessage, form })
