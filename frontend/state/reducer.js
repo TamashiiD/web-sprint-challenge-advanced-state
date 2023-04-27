@@ -64,7 +64,7 @@ function selectedAnswer(state = answer, action) {
 }
 
 const initial = {
-  initialMessageState: "",
+  initialmessageState: "",
   showmessage: false
 }
 function infoMessage(state = initial, action) {
@@ -73,7 +73,9 @@ function infoMessage(state = initial, action) {
       return ({ showmessage: true, initialmessageState: action.payload })
     case TURN_OFF:
       return ({ ...state, showmessage: false })
-
+    case SET_SELECTED_ANSWER:
+      console.log("HIT HERE")
+      return ({...state, initialmessageState:""})
     default:
       return state
   }
