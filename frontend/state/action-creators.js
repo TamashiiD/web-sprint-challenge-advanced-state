@@ -94,16 +94,20 @@ export const postanAnswer = (initialSelectedAnswerStatea, initialSelectedAnswerS
   if (initialSelectedAnswerStatea === "SELECTED") {
     axios.post("http://localhost:9000/api/quiz/answer", { "quiz_id": quizid, "answer_id": answerid })
       .then(res => {
+        const message = `Congrats: "${res.data.question}" is a great question!`
+
         dispatch(setMessage(res.data.message));
-        dispatch(addtodata(res.data.message))
+        dispatch(addtodata(message))
       })
       .catch(err => console.log(err))
   }
   if (initialSelectedAnswerStateb === "SELECTED") {
     axios.post("http://localhost:9000/api/quiz/answer", { "quiz_id": quizid, "answer_id": answerid2 })
       .then(res => {
+        const message2 = `Congrats: "${res.data.question}" is a great question!`
+
         dispatch(setMessage(res.data.message));
-        dispatch(addtodata(res.data.message))
+        dispatch(addtodata(message2))
       })
       .catch(err => console.log(err))
   }

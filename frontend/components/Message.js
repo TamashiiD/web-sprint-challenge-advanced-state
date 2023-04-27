@@ -2,9 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 function Message(props) {
-console.log(props)
-  return ( <div id="message">
-    {props.infoMessage.initialmessageState}
+  return ( 
+    
+<div id="message">  
+That was the correct answer 
+ {props.infoMessage.showmessage ? props.infoMessage.initialmessageState : props.correctAnswer.testresponse}
    </div>
   )}
 

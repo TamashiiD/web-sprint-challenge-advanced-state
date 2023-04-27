@@ -71,11 +71,11 @@ function infoMessage(state = initial, action) {
   switch (action.type) {
     case SET_INFO_MESSAGE:
       return ({ showmessage: true, initialmessageState: action.payload })
-    case TURN_OFF:
-      return ({ ...state, showmessage: false })
-    case SET_SELECTED_ANSWER:
-      console.log("HIT HERE")
-      return ({...state, initialmessageState:""})
+    // case TURN_OFF:
+    //   return ({ ...state, showmessage: false })
+    // case SET_SELECTED_ANSWER:
+    //   console.log("HIT HERE")
+    //   return ({...state, initialmessageState:""})
     default:
       return state
   }
@@ -142,12 +142,12 @@ function updateQuiz(state = initialupdatestate, action) {
 
 const correctAnswerState = {
   testresponse: "",
-  // showmessage: false
+  showmessage: false
 }
 function correctAnswer(state = correctAnswerState, action) {
   switch (action.type) {
     case TEST_PASSED:
-      return ({testresponse: action.payload })
+      return ({testresponse: action.payload, showmessage: true })
     case TURN_OFF2:
       return ({ ...state })
 
